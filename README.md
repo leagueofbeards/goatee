@@ -13,3 +13,5 @@ Quick and easy setup:
 Lots more coming to this.    
     
 If you have any questions, shoot a tweet to @kleinmaetschke.
+
+[See it in action.](http://iamkle.in)
