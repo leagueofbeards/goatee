@@ -8,10 +8,7 @@
 		<title><?php echo $firstName . ", " . $jobTitle . " at " . $companyName . "."; ?></title>
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/foundation.min.css">
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="js/vendor/chirp.min.js"></script>
-		<script src="js/vendor/engage.lastfm-min.js"></script>
-		<script src="js/application.js"></script>
 		<script>
 			if ( typeof(GOTEE) == "undefined" ) { GOTEE = {}; }
 				GOTEE.lastfmUser = "<?php echo $lastfmUser; ?>";
@@ -121,17 +118,10 @@
 				<div class="large-12 columns"></div>
 			</div>
 		</div>
-	<script src="js/foundation.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#goatee-logo').click(function(){
-				$('#login-pop #pass-pop').fadeToggle();
-				$('#passphrase').focus();
-			});
-		});
-	</script>
-	<script>
-		$(document).foundation();
-	</script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="js/vendor/engage.lastfm-min.js"></script>
+		<script src="js/application.js"></script>
+		<script src="js/foundation.min.js"></script>
+		<script>$(document).foundation();</script>
 	</body>
 </html>
