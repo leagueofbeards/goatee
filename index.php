@@ -1,16 +1,24 @@
+<?php include('config.php'); ?>
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
-		<?php include('config.php') ?>
 		<title><?php echo $firstName . ", " . $jobTitle . " at " . $companyName . "."; ?></title>
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/foundation.min.css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="js/vendor/chirp.min.js"></script>
 		<script src="js/vendor/engage.lastfm-min.js"></script>
+		<script src="js/application.js"></script>
+		<script>
+			if ( typeof(GOTEE) == "undefined" ) { GOTEE = {}; }
+				GOTEE.lastfmUser = "<?php echo $lastfmUser; ?>";
+				GOTEE.numListened = "<?php echo $numListened; ?>";
+				GOTEE.traktUser = "<?php echo $traktUser; ?>";
+				GOTEE.numWatched = "<?php echo $numWatched; ?>";
+		</script>
 		<style>
 			body { 
 				background: url('<?php echo $backgroundPath; ?>') no-repeat center center fixed;
@@ -24,59 +32,7 @@
 					color: <?php echo $companyColor ?>;	}
 		</style>
 		<script type="text/javascript">
-			$(document).ready(function(){
-
-				$('div#scrobbled').lastFM({
-					username: '<?php echo $lastfmUser; ?>',
-					apikey: '02bdccd1f8357d1820e423b0c1d0ffa4',
-					number: <?php echo $numListened; ?>,
-					artSize: 'large',
-					noart: 'images/blank_insert.gif',
-					onComplete: function(){
-						//Done
-					}
-				});
-				
-				$.ajax({
-		          type: "GET",
-		          url: "http://api.trakt.tv/activity/user.json/13fc39c1edc9a660e974c9432e9bec04/<?php echo $traktUser; ?>/all/scrobble", 
-		          dataType: "jsonp",
-		          success: function (json) {
-	            // Runs for every node within the outputs activity module.         
-	            $.each(json.activity, function(i,item){
-	              // This limits the output to only three, how cruel.
-	              if (i == <?php echo $numWatched; ?>){ return false; }
-	            
-	              // Checks if it's a movie or a show
-	              if (item.type == "movie") {
-	                var movieTitle = item.movie.title;
-	                var moviePoster = item.movie.images.poster.replace('.jpg','-300.jpg');
-	                var movieYear = item.movie.year;
-	                $("<dl/>").html("<dt class='trkt_poster'><img src="+moviePoster+" /></dt><dd class='trkt_title'>"+movieTitle+"</dd><dd class='trkt_info'>"+movieYear+"</dd>").appendTo("#trakt #watched");
-	                  
-	              } else if (item.type == "episode" || item.type == "show") {
-	                var showTitle = item.show.title;
-	                var showPoster = item.show.images.poster.replace('.jpg','-300.jpg');
-	                var episodeName = item.episode.title;
-	                var episodeNumber = item.episode.episode;
-	                var episodeSeason = item.episode.season;
-	                $("<dl/>").html("<dt class='trkt_poster'><img src="+showPoster+" /></dt><dd class='trkt_title'>"+showTitle+"</dd><dd class='trkt_info'>"+episodeName+" ("+episodeSeason+"X"+episodeNumber+")</dd>").appendTo("#trakt #watched");
-	              } else {
-	                $("<dl/>").html("What?!").appendTo("#trakt #watched");
-	              }
-	            });
-	            
-	            // There for some reason are no nodes to show, throw an pie in the users face.          
-	            if (json.activity.length == 0) {
-	              $("<dl/>").html("<dd class='trkt_title'>Seems something has gone horrifically wrong. Sorry about this...</dd>").appendTo("#trakt #watched");
-	            }
-	          },
-		          error: function(){
-		            // And now it's hit the metaphorical fan
-		            $("<div/>").html("Seems something has gone horrifically wrong. Sorry about this...").appendTo("#trakt #watched");
-		          }
-		        });
-		    });
+			
 		</script>
 		<script src="js/vendor/dribbble.js"></script>
 	    <script type="text/javascript">
